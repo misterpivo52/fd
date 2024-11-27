@@ -1,7 +1,7 @@
 import re
 import os
 
-def extract_first_and_second_sentences(input_file, output_file):
+def extract_first_sentence(input_file, output_file):
     try:
         # Проверяем, существует ли входной файл
         if not os.path.exists(input_file):
@@ -26,7 +26,7 @@ def extract_first_and_second_sentences(input_file, output_file):
                     if "Refer to the exhibit" in line:
                         # Ищем второе предложение
                         sentences = re.split(r"[.!?]", line)
-                        second_sentence = sentences[2].strip() if len(sentences) > 2 else ""
+                        second_sentence = sentences[1].strip() if len(sentences) > 2 else ""
                         outfile.write(f"{number}: {first_sentence.strip()} {second_sentence}\n")
                     else:
                         outfile.write(f"{number}: {first_sentence.strip()}\n")
@@ -39,8 +39,7 @@ def extract_first_and_second_sentences(input_file, output_file):
     except Exception as e:
         print(f"Произошла ошибка: {e}")
 
-# Пример использования
-input_file = "extracted_questions.txt"
-output_file = "output.txt"
-extract_first_and_second_sentences(input_file, output_file)
-
+if __name__ == '__main__':
+    input_file = "extracted_questions.txt"
+    output_file = "output.txt"
+    extract_first_sentence(input_file, output_file)
